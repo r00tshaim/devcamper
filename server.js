@@ -1,6 +1,9 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
+
 
 // Load env vars
 dotenv.config({ path: './config/config.env' });
@@ -12,8 +15,10 @@ const app = express();
 
 // Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'));
+    var accessLogStream = fs.createWriteStream(path.join(__dirname, "access.log"), { flags: 'a' });
+    app.use(morgan('dev', { stream: accessLogStream }));
 }
+
 
 // Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
