@@ -1,4 +1,4 @@
-const mogoose = require('nongoose');
+const mongoose = require('mongoose');
 
 const BootcampSchema = new mongoose.Schema({
     name: {
@@ -23,7 +23,7 @@ const BootcampSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        match: [10, 'Phone number cannot be more than 10 characters']
+        maxlength: [20, 'Phone number cannot be more than 20 characters']
     },
     email: {
         type: String,
@@ -58,7 +58,7 @@ const BootcampSchema = new mongoose.Schema({
     careers: {
         type: [String],
         require: true,
-        enum: ["Web Development", "UI/UX", "Mobile Development", "UI/UX", "Business", "Other"]
+        enum: ["Web Development", "UI/UX", "Mobile Development", "UI/UX", "Business", "Other", "Data Science"]
     },
     averageRating: {
         type: Number,
