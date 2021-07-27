@@ -14,7 +14,7 @@ exports.getBootcamps = async (req, res, next) => {
         const reqQuery = { ...req.query };
 
         // Fields to exclude
-        const removeFields = ['select'];
+        const removeFields = ['select', 'sort'];
 
         // Loop over removeFields and delete them from reqQuery
         removeFields.forEach(param => delete reqQuery[param]);
@@ -34,6 +34,16 @@ exports.getBootcamps = async (req, res, next) => {
             // Converting select fields to space seperted values ie: /api/v1/bootcamps?select=name,location to name location
             const fields = req.query.select.split(',').join(' ');
             query = query.select(fields);
+        }
+
+        // Sort
+        if (req.query.sort) {
+            const sortBy = req.query.sort.split(',').join(' ');
+            query = query.sort(sortBy);
+        } else {
+            // Default Sort
+            // -createdAt means sort by descending with createdAt field 
+            query = query.sort('-createdAt');
         }
 
         // Executing query
