@@ -3,3 +3,4 @@ config/config.env
 access.log
 _data
 devcamper_theme
+public/uploads
